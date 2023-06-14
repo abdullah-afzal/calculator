@@ -1,28 +1,32 @@
 import './App.css';
 import { useState } from 'react';
-import Button from './Button';
+import {Stack , Grid,Button, TextField,Typography} from "@mui/material";
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 
 function App() {
   const [ans,setAns]=useState(0);
   const [inputVal,setInputVal]=useState(0);
   const msg = new SpeechSynthesisUtterance();
-  const hold={textAlign:"left",margin:"1%"};
 
   //operations logic
   function sum(){
     let temp=Number(ans)+Number(inputVal);
+    setInputVal('');
     setAns(temp);
   }
   function subtract(){
     let temp=Number(ans)-Number(inputVal);
+    setInputVal('');
     setAns(temp);
   }
   function multiply(){
     let temp=Number(ans)*Number(inputVal);
+    setInputVal('');
     setAns(temp);
   }
   function divide(){
     let temp=Number(ans)/Number(inputVal);
+    setInputVal('');
     setAns(temp);
   }
   function reset(){
@@ -38,27 +42,28 @@ function App() {
   }
   
   return (
-    <div style={hold} className="App">
-      <h1 >Simplest Working Calculator</h1>
-      <h3>{ans}</h3> 
-      <input value={inputVal} style={{fontSize:"18px"}}  onChange={(e)=>{setInputVal(e.target.value)}} />
-
-      <div>
-        <div>
-          <Button name=":)"/>
-          <Button name="Read" col="lightGreen" f={readAloud}/>
-          <Button name="Reset" col="tomato" f={reset}/>
-          <Button name="Reset Result" col="tomato" f={resetResult}/>  
-        </div>
-        <div>
-          <Button name="Sum" col="lightGrey" f={sum}/>
-          <Button name="Subtract" col="lightGrey" f={subtract}/>
-          <Button name="Multiply" col="lightGrey" f={multiply}/>
-          <Button name="Divide" col="lightGrey" f={divide}/>  
-        </div>
+    <div className="App">
       
-      
-      </div>
+      <Stack ml={"33%"} mt={"5%"}> 
+        <Grid container direction="column" xs={3} m={2}>
+          <Typography variant="h5" >Simplest Working Calculator</Typography>
+          <Typography variant="h3">{ans}</Typography>
+          <TextField sx={{width:350}} id="outlined-basic" value={inputVal} onChange={(e)=>{setInputVal(e.target.value)}} label="New Value" variant="outlined" helperText="Enter new value here" />
+        </Grid>
+        <Stack m={2} spacing={2} direction="row">
+          <Button variant="contained" color="success" endIcon={<RecordVoiceOverIcon/>} onClick={readAloud}>Read</Button>
+          <Button variant="contained" color="error" onClick={reset}>Reset</Button>
+          <Button variant="contained" color="error" onClick={resetResult}>Reset Result</Button>
+        </Stack>
+        <Stack m={2} spacing ={4} direction="row">
+          
+          <Button variant="contained" onClick={sum}>+</Button>
+          <Button variant="contained" onClick={subtract}>-</Button>
+          <Button variant="contained" onClick={multiply}>x</Button>
+          <Button variant="contained" onClick={divide}>÷</Button>
+        </Stack>
+             
+      </Stack>
 
     </div>
   );
