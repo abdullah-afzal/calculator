@@ -1,0 +1,9 @@
+{
+    "description": "Calculatrice la plus simple et la plus mignonne",
+    "read": "Lire",
+    "reset": "Réinitialiser",
+    "resetResult": "Réinitialiser le résultat",
+    "newValue": "Nouvelle valeur",
+    "enterNewValueHere": "Entrez la nouvelle valeur ici"
+  }
+  

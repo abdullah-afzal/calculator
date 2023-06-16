@@ -1,118 +1,22 @@
 import './App.css';
 import { useState } from 'react';
-import {Stack , Grid,Button, TextField,Typography} from "@mui/material";
+import {Stack , Grid,Button, TextField,Typography,Divider} from "@mui/material";
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+import Particles from './Particles';
+import { useTranslation } from 'react-i18next';
+
 
 
 function App() {
   const [ans,setAns]=useState(0);
   const [inputVal,setInputVal]=useState(0);
   const msg = new SpeechSynthesisUtterance();
-  const Op={
-    "fullScreen": {
-        "enable": true,
-        "zIndex": -1
-    },
-    "particles": {
-        "number": {
-            "value": 20,
-            "density": {
-                "enable": false,
-                "value_area": 1000
-            }
-        },
-        "color": {
-          "value": "#808080"
-        },           
-        "size": {
-            "value": 4,
-            "random": false,
-            "anim": {
-                "enable": false,
-                "speed": 40,
-                "size_min": 0.1,
-                "sync": false
-            }
-        },
-        "rotate": {
-            "value": 0,
-            "random": true,
-            "direction": "clockwise",
-            "animation": {
-                "enable": true,
-                "speed": 5,
-                "sync": false
-            }
-        },
-        "line_linked": {
-            "enable": true,
-            "distance": 600,
-            "color": "#808080",
-            "opacity": 0.4,
-            "width": 2
-        },
-        "move": {
-            "enable": true,
-            "speed": 2,
-            "direction": "none",
-            "random": false,
-            "straight": false,
-            "out_mode": "out",
-            "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-            }
-        }
-    },
-    "interactivity": {
-        "events": {
-            "onhover": {
-                "enable": true,
-                "mode": ["grab"]
-            },
-            "onclick": {
-                "enable": false,
-                "mode": "bubble"
-            },
-            "resize": true
-        },
-        "modes": {
-            "grab": {
-                "distance": 400,
-                "line_linked": {
-                    "opacity": 1
-                }
-            },
-            "bubble": {
-                "distance": 400,
-                "size": 40,
-                "duration": 2,
-                "opacity": 8,
-                "speed": 3
-            },
-            "repulse": {
-                "distance": 200
-            },
-            "push": {
-                "particles_nb": 4
-            },
-            "remove": {
-                "particles_nb": 2
-            }
-        }
-    },
-    "retina_detect": true,
-    "background": {
-        "color": "#FFFFFF",
-        "image": "",
-        "position": "50% 50%",
-        "repeat": "no-repeat",
-        "size": "cover"
-    }
-};
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   //operations logic
   function sum(){
@@ -147,34 +51,25 @@ function App() {
     window.speechSynthesis.speak(msg);
   }
   
-  const particlesInit = async (main) => {
-    console.log(main);
-    // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
-    await loadFull(main);
-  };
 
   return (
     <div className="App">
-      
-      {/* Particles.js */}
-      <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={Op}
-    />
-
+      <Particles/>
       <Stack ml={"33%"} mt={"5%"}> 
+        <Stack direction="row" divider={<Divider orientation="vertical" flexItem/>} mr={4} justifyContent="flex-end">
+          <Button variant="text" onClick={() => changeLanguage('en')}>en</Button>
+          <Button variant="text" onClick={() => changeLanguage('ur')}>ur</Button>
+          <Button variant="text" onClick={() => changeLanguage('fr')}>fr</Button>
+        </Stack>
         <Grid container direction="column" xs={3} m={2}>
-          <Typography variant="h5" >Simplest and Cutest Calculator</Typography>
+          <Typography variant="h5" >{t('description')}</Typography>
           <Typography variant="h3">{ans}</Typography>
-          <TextField sx={{width:350}} id="outlined-basic" value={inputVal} onChange={(e)=>{setInputVal(e.target.value)}} label="New Value" variant="outlined" helperText="Enter new value here" />
+          <TextField sx={{width:350}} id="outlined-basic" value={inputVal} onChange={(e)=>{setInputVal(e.target.value)}} label={t('newValue')} variant="outlined" helperText={t('enterNewValueHere')} />
         </Grid>
         <Stack m={2} spacing={2} direction="row">
-          <Button variant="contained" color="success" endIcon={<RecordVoiceOverIcon/>} onClick={readAloud}>Read</Button>
-          <Button variant="contained" color="error" onClick={reset}>Reset</Button>
-          <Button variant="contained" color="error" onClick={resetResult}>Reset Result</Button>
+          <Button variant="contained" color="success" endIcon={<RecordVoiceOverIcon/>} onClick={readAloud}>{t('read')}</Button>
+          <Button variant="contained" color="error" onClick={reset}>{t('reset')}</Button>
+          <Button variant="contained" color="error" onClick={resetResult}>{t('resetResult')}</Button>
         </Stack>
         <Stack m={2} spacing ={4} direction="row">
           

@@ -1,0 +1,8 @@
+{
+    "description":"Simplest and Cutest Calculator",
+    "read":"Read",
+    "reset":"Reset",
+    "resetResult":"Reset Result",
+    "newValue":"New Value",
+    "enterNewValueHere":"Enter new value here"
+}
